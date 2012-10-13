@@ -1,0 +1,4 @@
+#Configuration variables
+
+#rotten tomatoes api key
+rt_key="key_here"
