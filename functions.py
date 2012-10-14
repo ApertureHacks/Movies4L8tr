@@ -1,6 +1,7 @@
 import json
 import urllib2
 import urllib
+import _mysql
 from config import *
 
 def get_upcoming(n):
@@ -29,3 +30,16 @@ def get_movie(name):
 		r[i] = {'title': movie['title'], 'release-dates': movie['release_dates']['theater'], 'poster': movie['posters']['detailed']}
 		i=i+1
 	return r
+
+def addto_db(user, movie, release, email, phone):
+	db = _mysql.connect(host='localhost', user='root', passwd=dbpass, db='movie_users')
+	cursor = db.cursor()
+	try:
+		cursor.execute("""INSERT INTO users VALUES (%s,%s,%s,%s,%s)""",(user,movie,release,email,phone)
+		db.commit()
+		return True
+	except:
+		db.rollback()
+		return False
+
+
