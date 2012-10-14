@@ -2,6 +2,7 @@ import json
 import urllib2
 import urllib
 import _mysql
+import sendgrid
 from twilio.rest import TwilioRestClient
 from config import *
 
@@ -51,3 +52,9 @@ def send_text(user, movie, phone):
 	text = 'Hello '+user+'! The movie '+movie+' has been released today! Go see it in a theater near you!'
 	message = client.sms.messages.create(to='+1'+phone, from=sender, body=text)
 	return
+
+def send_email(user, movie, email):
+	s = sendgrid.Sendgrid(sg_user, sg_pass, secure=True)
+	message = sendgrid.Message(sg_email, movie+' Has Been Released', 'Hello '+user+!' The movie '+movie+' has been released today. Go see it in a theater near you!')
+	message.add_to(email, user)
+	s.smtp.send(message)
