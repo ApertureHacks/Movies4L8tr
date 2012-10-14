@@ -18,5 +18,11 @@ def search_page():
 	mdict = search_movie(title)
 	return render_template('main.html', mdict=mdict)
 
+@app.route('/movie/<idnumber>')
+def get_movie_by_id(idnumber):
+	mdict = get_movie(idnumber)
+	pprint(mdict)
+	return render_template('movie.html', movie=mdict)
+
 if __name__ == '__main__':
 	app.run()

@@ -53,9 +53,7 @@
 	  </div>
 	  <div class="row">
 		<div class="span3">
-			{% for movie in mdict %}
-			<img src="{{ movie.posters.detailed }}" alt="{{ movie.title }}" />
-			{% endfor %}
+		  <img src="{{ movie.posters.detailed }}" alt="{{ movie.title }}" />
 		</div>
 		<div class="span5">
 			<form action="@@fillmein@@" method="get" accept-charset"utf-8">
@@ -76,15 +74,11 @@
 	  
 	  <div class="row">
 	  	<div class="span2 hero-unit">
-			{% for movie in mdict %}
 			<div><b>Critic's Score:</b> {{ movie.ratings.critics_score }}</div>
 			<div><b>Audience's Score:</b> {{ movie.ratings.audience_score }}</div>
-			{% endfor %}
 		</div>
 		<div class="span5 hero-unit">
-			{% for movie in mdict %}
 			<div><b>Synopsis:</b> {{ movie.synopsis }}</div>
-			{% endfor %}
 		</div>
 	  </div>
 
