@@ -42,7 +42,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Movies For Later</a>
+          <a class="brand" href="/">Movies For Later</a>
         </div>
       </div>
     </div>
@@ -78,7 +78,11 @@
 			<div><b>Audience's Score:</b> {{ movie.ratings.audience_score }}</div>
 		</div>
 		<div class="span5 hero-unit">
-			<div><b>Synopsis:</b> {{ movie.synopsis }}</div>
+		  {% if movie.synopsis %}
+		  <div><b>Synopsis:</b> {{ movie.synopsis }}</div>
+		  {% else %}
+		  <div><h2>No Synopsis Available</h2></div>
+		  {% endif %}
 		</div>
 	  </div>
 
