@@ -2,6 +2,7 @@ import json
 import urllib2
 import urllib
 import _mysql
+from twilio.rest import TwilioRestClient
 from config import *
 
 def get_upcoming(n):
@@ -42,4 +43,11 @@ def addto_db(user, movie, release, email, phone):
 		db.rollback()
 		return False
 
-
+def send_text(user, movie, phone):
+	account = tw_account
+	token = tw_token
+	sender = tw_sender
+	client = TwilioRestClient(account, token)
+	text = 'Hello '+user+'! The movie '+movie+' has been released today! Go see it in a theater near you!'
+	message = client.sms.messages.create(to='+1'+phone, from=sender, body=text)
+	return
