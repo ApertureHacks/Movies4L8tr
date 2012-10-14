@@ -6,6 +6,9 @@ import MySQLdb
 import MySQLdb.cursors
 from twilio.rest import TwilioRestClient
 from config import *
+from pprint import *
+
+db = MySQLdb.connect(host='localhost', user='root', passwd=dbpass, db='movie_users')
 
 def get_upcoming(n):
 	url = 'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey='+rt_key+'&page_limit='+str(n)
@@ -38,7 +41,6 @@ def get_movie(index):
 
 def addto_db(user, movie, release, email, phone):
 	#db = MySQLdb.connect(host='localhost', user='root', passwd=dbpass, db='movie_users', cursorclass='MySQLdb.cursors.DictCursor')
-	db = MySQLdb.connect(host='localhost', user='root', passwd=dbpass, db='movie_users')
 	#import pdb; pdb.set_trace()
 	cursor = db.cursor()
 	try:
@@ -49,16 +51,38 @@ def addto_db(user, movie, release, email, phone):
 		db.rollback()
 		return False
 
+def get_old():
+	#db = MySQLdb.connect(host='localhost', user='root', passwd=dbpass, db='movie_users', cursorclass='MySQLdb.cursors.DictCursor')
+	db = MySQLdb.connect(host='localhost', user='root', passwd=dbpass, db='movie_users')
+	#import pdb; pdb.set_trace()
+	cursor = db.cursor()
+	cursor.execute("SELECT * FROM users")
+	rows = cursor.fetchall()
+	for row in rows:
+		data = {}
+		data['name'] = row[1][1:][:-1]
+		data['title'] = row[2][1:][:-1]
+		data['email'] = row[4][1:][:-1]
+		data['phone'] = row[5][1:]
+		send_text(data['name'], data['title'], data['phone'])
+		send_email(data['name'], data['title'], data['email'])
+	cursor.execute("TRUNCATE TABLE users")
+
 def send_text(user, movie, phone):
+	phone = "+1"+phone
+	print phone
 	account = tw_account
 	token = tw_token
 	sender = tw_sender
 	client = TwilioRestClient(account, token)
 	text = 'Hello '+user+'! The movie '+movie+' has been released today! Go see it in a theater near you!'
-	message = client.sms.messages.create(to='+1'+phone, from_=sender, body=text)
+	message = client.sms.messages.create(to=unicode(phone), from_=sender, body=text)
 	return
 
 def send_email(user, movie, email):
+	print user
+	print movie
+	print email
 	s = sendgrid.Sendgrid(sg_user, sg_pass, secure=True)
 	message = sendgrid.Message(sg_email, movie+' Has Been Released', 'Hello '+user+'! The movie '+movie+' has been released today. Go see it in a theater near you!')
 	message.add_to(email, user)

@@ -45,12 +45,6 @@ def answer_ajax():
 	if 'release' in request.form:
 		release = request.form['release']
 	
-	print name
-	print movie
-	print release
-	print email
-	print phone
-	
 	addto_db(name, movie, release, email, phone);
 
 	return 'success'

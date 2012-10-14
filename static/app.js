@@ -5,6 +5,7 @@ function validateForm() {
 		return false;
 	}
 	var phone = document.forms["mainform"]["_phone"].value;
+	console.log(phone);
 	var email = document.forms["mainform"]["_email"].value;
 	if((phone==null && email==null) || (phone=="" && email=="") || (phone==null && email=="") || (phone=="" && email==null)) {
 		alert("Either email or phone must be filled out");

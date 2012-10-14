@@ -10,5 +10,5 @@ CREATE TABLE IF NOT EXISTS `users` (
 	`movietitle` varchar(128) NOT NULL,
 	`releasedate` date NOT NULL,
 	`email` varchar(128),
-	`phone` varchar(10)
+	`phone` varchar(11)
 );
