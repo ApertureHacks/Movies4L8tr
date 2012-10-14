@@ -13,11 +13,9 @@ def get_upcoming(n):
 	result = json.load(u);
 	u.close()
 	movies = result['movies']
-	i=1
-	for movie in movies:
-		r[i] = {'title': movie['title'], 'release-dates': movie['release_dates']['theater'], 'poster': movie['posters']['detailed']}
-		i=i+1
-	return r
+	#for movie in movies:
+	#	r['m' + str(i)] = {'title': movie['title'], 'release-dates': movie['release_dates']['theater'], 'poster': movie['posters']['detailed']}
+	return movies
 
 def get_movie(name):
 	r = {}
