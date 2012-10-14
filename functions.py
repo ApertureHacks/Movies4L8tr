@@ -1,8 +1,9 @@
 import json
 import urllib2
 import urllib
-import MySQLdb
 import sendgrid
+import MySQLdb
+import MySQLdb.cursors
 from twilio.rest import TwilioRestClient
 from config import *
 
@@ -36,10 +37,12 @@ def get_movie(index):
 	return result
 
 def addto_db(user, movie, release, email, phone):
+	#db = MySQLdb.connect(host='localhost', user='root', passwd=dbpass, db='movie_users', cursorclass='MySQLdb.cursors.DictCursor')
 	db = MySQLdb.connect(host='localhost', user='root', passwd=dbpass, db='movie_users')
+	#import pdb; pdb.set_trace()
 	cursor = db.cursor()
 	try:
-		cursor.execute("""INSERT INTO users VALUES (%s,%s,%s,%s,%s)""",(user,movie,release,email,phone))
+		cursor.execute("""INSERT INTO users(name, movietitle, releasedate, email, phone) VALUES ("%s","%s",%s,"%s","%s")""",(user,movie,release,email,phone))
 		db.commit()
 		return True
 	except:
