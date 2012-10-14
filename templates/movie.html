@@ -49,37 +49,48 @@
 
 	<div class="container">
 	  <div class="row">
-	  	<div class="span6 offset3">Sign Up to Receive an Alert When Movie is Released</div>
 	  </div>
 	  <div class="row">
-		<div class="span3">
-		  <img src="{{ movie.posters.detailed }}" alt="{{ movie.title }}" />
+		<div class="span3 well">
+		  <img src="{{ movie.posters.detailed }}" alt="{{ movie.title }}" style="width: 70%; display: block; margin-right: auto; margin-left: auto;"/>
 		</div>
-		<div class="span5">
-			<form name="mainform" onsubmit="return validateForm()" method="get" accept-charset"utf-8">
-			<!--<form name="mainform" method="post">-->
-				<div>Name:</div>
-				<input type="text" name="_user" placeholder="e.g. John Doe" class="input-large" style="height:35px; width=80%;" />
-				<div>Phone Number (to receive SMS reminder):</div>
-				<input type="text" name="_phone" placeholder="e.g. 1234567890" class="input-large" style="height:35px; width:80%;" />
-				<div>Email (to receive email reminder):</div>
-				<input type="text" name="_email" placeholder="e.g. john@doe.com" class="input-large" style="height:35px; width:80%;" />
-				<input id="gobutton" type="submit" value="Submit" />
-			</form>
-		</div>
-	  </div>
 
-	  <div class="row">
-	  	<div class="span12" style="height:20px">
+		<div class="span5 offset1">
+		  <form name="mainform" onsubmit="return validateForm()" method="post" accept-charset"utf-8">
+			<label><b>Sign Up to Receive an Alert When Movie is Released</b></label>
+			<br>
+			<label>Name:</label>
+			<input type="text" name="_user" placeholder="e.g. John Doe" class="input-xlarge"/>
+			<br>
+			<div class="input-append">
+			  <label>Email (to receive email reminder):</label>
+			  <input type="text" name="_email" placeholder="e.g. john@doe.com" class="input-xlarge"><button class="btn" type="button">Go!</button>
+			</div>
+			<div class="input-append">
+			  <br>
+			  <label>Phone Number (to receive SMS reminder):</label>
+			  <input type="text" name="_phone" placeholder="e.g. 1234567890" class="input-xlarge"><button class="btn" type="button">Go!</button>
+			</div>
+			<br>
+
+		  </form>
 		</div>
 	  </div>
 	  
 	  <div class="row">
-	  	<div class="span2 hero-unit">
-			<div><b>Critic's Score:</b> {{ movie.ratings.critics_score }}</div>
-			<div><b>Audience's Score:</b> {{ movie.ratings.audience_score }}</div>
+	  	<div class="span3">
+		  <table class="table">
+			<tr>
+			  <td style="border-top: 0px;"><b>Critic's<br>Score:</b></td>
+			  <td style="font-size: xx-large; float: right; border-top: 0px;">{{ movie.ratings.critics_score }}</td>
+			</tr>
+			<tr>
+			  <td style="border-top: 0px;"><b>Audience's<br>Score:</b></td>
+			  <td style="font-size: xx-large; float: right; border-top: 0px;">{{ movie.ratings.audience_score }}</td>
+			</tr>
+		  </table>
 		</div>
-		<div class="span5 hero-unit">
+		<div class="span7 offset1 well">
 		  {% if movie.synopsis %}
 		  <div><b>Synopsis:</b> {{ movie.synopsis }}</div>
 		  {% else %}
