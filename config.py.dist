@@ -6,6 +6,7 @@ rt_key="key_here"
 #twilio auth here
 tw_account='account here'
 tw_token='token here'
+tw_sender='number'
 
 #db password here
 dbpass='pass'
