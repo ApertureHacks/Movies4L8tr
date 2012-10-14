@@ -27,18 +27,29 @@ def get_movie_by_id(idnumber):
 	mdict = get_movie(idnumber)
 	return render_template('movie.html', movie=mdict)
 
-@app.route('/ajax/', methods=['POST'])
+@app.route('/ajax', methods=['POST'])
 def answer_ajax():
-	if 'name' in request.body:
-		name = request.body['name']
-	if 'email' in request.body:
-		email = request.body['email']
-	if 'phone' in request.body:
-		phone = request.body['phone']
-	if 'movie' in request.body:
-		movie = request.body['movie']
-	if 'release' in request.body:
-		release = request.body['release']
+	print "ajax call reveived"
+	if 'name' in request.form:
+		name = request.form['name']
+	if 'email' in request.form:
+		email = request.form['email']
+	else:
+		email = "nope"
+	if 'phone' in request.form:
+		phone = request.form['phone']
+	else:
+		phone = "nope"
+	if 'movie' in request.form:
+		movie = request.form['movie']
+	if 'release' in request.form:
+		release = request.form['release']
+	
+	print name
+	print movie
+	print release
+	print email
+	print phone
 	
 	addto_db(name, movie, release, email, phone);
 

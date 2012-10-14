@@ -10,16 +10,21 @@ function validateForm() {
 		alert("Either email or phone must be filled out");
 		return false;
 	}
-	//use the jquery ajax helpers
+	var movie = document.forms["mainform"]["_movie"].value;
+	var release = document.forms["mainform"]["_release"].value;
 	$.ajax(
-	{
-		type: "POST",
-		url: "ajax",
-		data: { name : name,
-				email : email,
-				phone: phone}
-	}
-	).done(function( returnData ) {
-
+		{
+			type : 'POST',
+			url : '/ajax',
+			data : { name : name,
+					 phone : phone,
+					 email : email,
+					 movie : movie,
+					 release : release
+					}
+		}
+	  ).done(function( returnData ){
 		$("#gobutton").addClass("btn-success");
+	  });
+
 }
