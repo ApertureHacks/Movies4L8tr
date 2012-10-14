@@ -1,0 +1,9 @@
+p.movie_title,
+p.movie_title:visited,
+p.movie_title:active,
+p.movie_title:hover,
+p.movie_title:active{
+	color: #000 !important;
+	text-decoration: none !important;
+	font-size: small !important;
+}

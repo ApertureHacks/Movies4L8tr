@@ -11,6 +11,7 @@
 
     <!-- Le styles -->
 	<link href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='custom.css') }}" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -61,9 +62,10 @@
 	  <div class="hero-unit" style="overflow: auto; white-space: nowrap; height: 50%;">
 		<div class="row">
 		  {% for movie in mdict %}
-		  <div class="span2 well" style="display:inline-block; float:none; ">
+		  <div class="span2" style="display:inline-block; float:none; overflow: hidden;">
 			<a href="/movie/{{ movie.title }}">
 			  <img src="{{ movie.posters.detailed }}" alt="{{ movie.title }}"/>
+			  <p class="movie_title"><strong>{{ movie.title }}</strong></p>
 			</a>
 		  </div>
 		  {% endfor %}
