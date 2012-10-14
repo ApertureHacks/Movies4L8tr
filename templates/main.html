@@ -63,7 +63,7 @@
 		<div class="row">
 		  {% for movie in mdict %}
 		  <div class="span2" style="display:inline-block; float:none; overflow: hidden;">
-			<a href="/movie/{{ movie.title }}">
+			<a href="/movie/{{ movie.id }}">
 			  <img src="{{ movie.posters.detailed }}" alt="{{ movie.title }}"/>
 			  <p class="movie_title"><strong>{{ movie.title }}</strong></p>
 			</a>
