@@ -10,5 +10,16 @@ function validateForm() {
 		alert("Either email or phone must be filled out");
 		return false;
 	}
-	$("#gobutton").addClass("btn-success");
+	//use the jquery ajax helpers
+	$.ajax(
+	{
+		type: "POST",
+		url: "ajax",
+		data: { name : name,
+				email : email,
+				phone: phone}
+	}
+	).done(function( returnData ) {
+
+		$("#gobutton").addClass("btn-success");
 }
