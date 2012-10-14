@@ -7,7 +7,6 @@ from twilio.rest import TwilioRestClient
 from config import *
 
 def get_upcoming(n):
-	r = {}
 	url = 'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey='+rt_key+'&page_limit='+str(n)
 	u = urllib2.urlopen(url)
 	result = json.load(u);
@@ -17,19 +16,24 @@ def get_upcoming(n):
 	#	r['m' + str(i)] = {'title': movie['title'], 'release-dates': movie['release_dates']['theater'], 'poster': movie['posters']['detailed']}
 	return movies
 
-def get_movie(name):
-	r = {}
+def search_movie(name):
 	#name = urllib.urlencode(name)
 	url = 'http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey='+rt_key+'&q='+name+'&page_limit=5'
 	u = urllib2.urlopen(url)
 	result = json.load(u);
 	u.close()
 	movies = result['movies']
-	i=1
-	for movie in movies:
-		r[i] = {'title': movie['title'], 'release-dates': movie['release_dates']['theater'], 'poster': movie['posters']['detailed']}
-		i=i+1
-	return r
+	#for movie in movies:
+	#	r[i] = {'title': movie['title'], 'release-dates': movie['release_dates']['theater'], 'poster': movie['posters']['detailed']}
+	#	i=i+1
+	return movies
+
+def get_movie(index):
+	url = 'http://api.rottentomatoes.com/api/public/v1.0/movies/'+index+'.json?apikey='+rt_key
+	u = urllib2.urlopen(url)
+	result = json.load(u);
+	u.close()
+	return result
 
 def addto_db(user, movie, release, email, phone):
 	db = _mysql.connect(host='localhost', user='root', passwd=dbpass, db='movie_users')
