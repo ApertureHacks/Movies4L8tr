@@ -1,7 +1,7 @@
 import json
 import urllib2
 import urllib
-import _mysql
+import MySQLdb
 import sendgrid
 from twilio.rest import TwilioRestClient
 from config import *
@@ -36,10 +36,10 @@ def get_movie(index):
 	return result
 
 def addto_db(user, movie, release, email, phone):
-	db = _mysql.connect(host='localhost', user='root', passwd=dbpass, db='movie_users')
+	db = MySQLdb.connect(host='localhost', user='root', passwd=dbpass, db='movie_users')
 	cursor = db.cursor()
 	try:
-		cursor.execute("""INSERT INTO users VALUES (%s,%s,%s,%s,%s)""",(user,movie,release,email,phone)
+		cursor.execute("""INSERT INTO users VALUES (%s,%s,%s,%s,%s)""",(user,movie,release,email,phone))
 		db.commit()
 		return True
 	except:
@@ -52,11 +52,11 @@ def send_text(user, movie, phone):
 	sender = tw_sender
 	client = TwilioRestClient(account, token)
 	text = 'Hello '+user+'! The movie '+movie+' has been released today! Go see it in a theater near you!'
-	message = client.sms.messages.create(to='+1'+phone, from=sender, body=text)
+	message = client.sms.messages.create(to='+1'+phone, from_=sender, body=text)
 	return
 
 def send_email(user, movie, email):
 	s = sendgrid.Sendgrid(sg_user, sg_pass, secure=True)
-	message = sendgrid.Message(sg_email, movie+' Has Been Released', 'Hello '+user+!' The movie '+movie+' has been released today. Go see it in a theater near you!')
+	message = sendgrid.Message(sg_email, movie+' Has Been Released', 'Hello '+user+'! The movie '+movie+' has been released today. Go see it in a theater near you!')
 	message.add_to(email, user)
 	s.smtp.send(message)
