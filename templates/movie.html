@@ -56,7 +56,7 @@
 		  <img src="{{ movie.posters.detailed }}" alt="{{ movie.title }}" />
 		</div>
 		<div class="span5">
-			<form name="mainform" onsubmit="return validateForm()" method="post" accept-charset"utf-8">
+			<form name="mainform" onsubmit="return validateForm()" method="get" accept-charset"utf-8">
 			<!--<form name="mainform" method="post">-->
 				<div>Name:</div>
 				<input type="text" name="_user" placeholder="e.g. John Doe" class="input-large" style="height:35px; width=80%;" />
@@ -64,7 +64,7 @@
 				<input type="text" name="_phone" placeholder="e.g. 1234567890" class="input-large" style="height:35px; width:80%;" />
 				<div>Email (to receive email reminder):</div>
 				<input type="text" name="_email" placeholder="e.g. john@doe.com" class="input-large" style="height:35px; width:80%;" />
-				<input type="submit" value="Submit" />
+				<input id="gobutton" type="submit" value="Submit" />
 			</form>
 		</div>
 	  </div>

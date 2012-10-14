@@ -10,5 +10,5 @@ function validateForm() {
 		alert("Either email or phone must be filled out");
 		return false;
 	}
-	//$("#gobutton").addClass("btn-success");
+	$("#gobutton").addClass("btn-success");
 }
