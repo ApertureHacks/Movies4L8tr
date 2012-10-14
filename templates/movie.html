@@ -56,22 +56,27 @@
 		</div>
 
 		<div class="span5 offset1">
-		  <form name="mainform" onsubmit="return validateForm()" method="post" accept-charset"utf-8">
+		  <form name="mainform" accept-charset"utf-8">
+
+			<input type="hidden" name="_movie" value="{{ movie.title }}"/>
+
+			<input type="hidden" name="_release" value="{{ movie.release_dates.theater }}"/>
+
 			<label><b>Sign Up to Receive an Alert When Movie is Released</b></label>
 			<br>
+
 			<label>Name:</label>
 			<input type="text" name="_user" placeholder="e.g. John Doe" class="input-xlarge"/>
 			<br>
-			<div class="input-append">
-			  <label>Email (to receive email reminder):</label>
-			  <input type="text" name="_email" placeholder="e.g. john@doe.com" class="input-xlarge"><button class="btn" type="button">Go!</button>
-			</div>
-			<div class="input-append">
-			  <br>
-			  <label>Phone Number (to receive SMS reminder):</label>
-			  <input type="text" name="_phone" placeholder="e.g. 1234567890" class="input-xlarge"><button class="btn" type="button">Go!</button>
-			</div>
+
+			<label>Email (to receive email reminder):</label>
+			<input type="text" name="_email" placeholder="e.g. john@doe.com" class="input-xlarge"/>
 			<br>
+
+			<label>Phone Number (to receive SMS reminder):</label>
+			<input type="text" name="_phone" placeholder="e.g. 1234567890" class="input-xlarge"/>
+			<br>
+			<button class="btn btn-large" type="button" id="gobutton" onclick="validateForm()">Submit</button>
 
 		  </form>
 		</div>
@@ -99,7 +104,6 @@
 		</div>
 	  </div>
 
-      <hr>
 
     </div> <!-- /container -->
 
