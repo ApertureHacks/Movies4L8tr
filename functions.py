@@ -4,11 +4,15 @@ import urllib
 import sendgrid
 import MySQLdb
 import MySQLdb.cursors
+import pymongo
 from twilio.rest import TwilioRestClient
 from config import *
 from pprint import *
 
-db = MySQLdb.connect(host='localhost', user='root', passwd=dbpass, db='movie_users')
+#db = MySQLdb.connect(host='localhost', user='root', passwd=dbpass, db='movie_users')
+dbconnection = pymongo.Connection()
+db = dbconnection.movie_users
+collection = db.users
 
 def get_upcoming(n):
 	url = 'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey='+rt_key+'&page_limit='+str(n)
@@ -42,31 +46,49 @@ def get_movie(index):
 def addto_db(user, movie, release, email, phone):
 	#db = MySQLdb.connect(host='localhost', user='root', passwd=dbpass, db='movie_users', cursorclass='MySQLdb.cursors.DictCursor')
 	#import pdb; pdb.set_trace()
-	cursor = db.cursor()
-	try:
-		cursor.execute("""INSERT INTO users(name, movietitle, releasedate, email, phone) VALUES ("%s","%s",%s,"%s","%s")""",(user,movie,release,email,phone))
-		db.commit()
-		return True
-	except:
-		db.rollback()
-		return False
+#	cursor = db.cursor()
+#	try:
+#		cursor.execute("""INSERT INTO users(name, movietitle, releasedate, email, phone) VALUES ("%s","%s",%s,"%s","%s")""",(user,movie,release,email,phone))
+#		db.commit()
+#		return True
+#	except:
+#		db.rollback()
+#		return Falsea
+	post = {"user" : user,
+			"movie" : movie,
+			"release" : release,
+			"email" : email,
+			"phone" : phone
+			}
+	collection.insert(post)
 
 def get_old():
-	#db = MySQLdb.connect(host='localhost', user='root', passwd=dbpass, db='movie_users', cursorclass='MySQLdb.cursors.DictCursor')
-	db = MySQLdb.connect(host='localhost', user='root', passwd=dbpass, db='movie_users')
-	#import pdb; pdb.set_trace()
-	cursor = db.cursor()
-	cursor.execute("SELECT * FROM users")
-	rows = cursor.fetchall()
-	for row in rows:
-		data = {}
-		data['name'] = row[1][1:][:-1]
-		data['title'] = row[2][1:][:-1]
-		data['email'] = row[4][1:][:-1]
-		data['phone'] = row[5][1:]
-		send_text(data['name'], data['title'], data['phone'])
-		send_email(data['name'], data['title'], data['email'])
-	cursor.execute("TRUNCATE TABLE users")
+	##db = MySQLdb.connect(host='localhost', user='root', passwd=dbpass, db='movie_users', cursorclass='MySQLdb.cursors.DictCursor')
+	#db = MySQLdb.connect(host='localhost', user='root', passwd=dbpass, db='movie_users')
+	##import pdb; pdb.set_trace()
+	#cursor = db.cursor()
+	#cursor.execute("SELECT * FROM users")
+	#rows = cursor.fetchall()
+	#for row in rows:
+	#	data = {}
+	#	data['name'] = row[1][1:][:-1]
+	#	data['title'] = row[2][1:][:-1]
+	#	data['email'] = row[4][1:][:-1]
+	#	data['phone'] = row[5][1:]
+	#	send_text(data['name'], data['title'], data['phone'])
+	#	send_email(data['name'], data['title'], data['email'])
+	#cursor.execute("TRUNCATE TABLE users")
+
+	post = collection.find_one()
+	pprint(post)
+	print post['user']
+	print post['email']
+	print post['phone']
+	print post['email']
+	send_text(post['user'], post['movie'], post['phone'])
+	send_email(post['user'], post['movie'], post['email'])
+	result = collection.remove(spec_or_id={'_id': post['_id']}, safe=True)
+	print result
 
 def send_text(user, movie, phone):
 	phone = "+1"+phone
