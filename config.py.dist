@@ -8,5 +8,10 @@ tw_account='account here'
 tw_token='token here'
 tw_sender='number'
 
+#sendgrid auth here
+sg_user='username'
+sg_pass='pass'
+sg_email='email'
+
 #db password here
 dbpass='pass'
