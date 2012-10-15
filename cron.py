@@ -1,3 +1,9 @@
 from functions import *
+import time
 
-get_old()
+while True:
+	try:
+		get_old()
+	except:
+		print "db empty"
+	time.sleep(15)
